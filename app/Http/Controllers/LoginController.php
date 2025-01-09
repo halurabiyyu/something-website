@@ -27,23 +27,14 @@ class LoginController extends Controller
         try {
             if (Auth::attempt($credentials)) {
                 $user = Auth::user(); // Get the authenticated user
-    
-                // Redirect based on user role
-                switch ($user->level_id) {
-                    case 1: // Admin
-                        return redirect()->intended('admin/dashboard');
-                    case 2: // Cashier
-                        return redirect()->intended('cashier/dashboard');
-                    case 3: // Regular User
-                        return redirect()->intended('user/dashboard'); // Change this as per your needs
-                    default:
-                        // Redirect if role doesn't match any predefined case
-                        Auth::logout(); // Log out the user for invalid roles
-                        return redirect('/login')->with('error', 'Access denied!');
+                if ($user) {
+                    return redirect()->intended('admin/dashboard');
                 }
+                // Redirect based on user role
+                return redirect('/login')->with('error', 'Access denied!');
             }
         } catch (\Exception $e) {
-            return redirect('/register')->with('error', $e->getMessage());
+            return redirect('/login')->with('error', $e->getMessage());
         }
         // Attempt to authenticate the user
         

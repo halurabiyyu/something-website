@@ -18,13 +18,13 @@
       {{session('error')}}
     </div>
     @endif
-    <a href="{{route('users.create')}}" class="btn btn-success my-1">Tambah</a>
+    <a href="{{route('roles.create')}}" class="btn btn-success my-1">Tambah</a>
     <div class="table-responsive">
       <table id="userTable" class="table table-striped">
         <thead>
           <tr>
             <th>Nomor</th>
-            <th>Email</th>
+            <th>Kode</th>
             <th>Nama</th>
             <th>Aksi</th>
           </tr>
@@ -46,7 +46,7 @@ $(document).ready(function() {
         processing: true,
         serverSide: true,
         ajax: {
-            url: "{{ route('users.list') }}",
+            url: "{{ route('roles.list') }}",
             type: "POST",
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -63,8 +63,8 @@ $(document).ready(function() {
                     searchable: false
             },
             {
-                data: 'email',
-                name: 'email'
+                data: 'code',
+                name: 'code'
             },
             {
                 data: 'name',

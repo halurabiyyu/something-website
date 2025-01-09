@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\UserModel;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Yajra\DataTables\Facades\DataTables;
@@ -58,15 +59,15 @@ class UserController extends Controller
         try {
             Log::info('DataTables request received');
 
-            $users = UserModel::select('user_id', 'username', 'name', 'level_id');
+            $users = User::select('id', 'email', 'name');
             Log::info('User  count: ' . $users->count());
 
             $datatable = DataTables::of($users)
                 ->addIndexColumn()
                 ->addColumn('aksi', function ($user) {
-                    $btn  = '<a href="' . url('/admin/users/' . $user->user_id) . '" class="btn btn-info btn-sm">Detail</a> ';
-                    $btn .= '<a href="' . url('/admin/users/' . $user->user_id . '/edit') . '" class="btn btn-warning btn-sm">Edit</a> ';
-                    $btn .= '<form class="d-inline-block" method="POST" action="' . url('/admin/users/' . $user->user_id) . '">' . csrf_field() . method_field('DELETE') . '<button type="submit" class="btn btn-danger btn-sm" onclick="return confirm(\'Apakah Anda yakin menghapus data ini?\');">Hapus</button></form>';
+                    $btn  = '<a href="' . url('/admin/users/' . $user->id) . '" class="btn btn-info btn-sm">Detail</a> ';
+                    $btn .= '<a href="' . url('/admin/users/' . $user->id . '/edit') . '" class="btn btn-warning btn-sm">Edit</a> ';
+                    $btn .= '<form class="d-inline-block" method="POST" action="' . url('/admin/users/' . $user->id) . '">' . csrf_field() . method_field('DELETE') . '<button type="submit" class="btn btn-danger btn-sm" onclick="return confirm(\'Apakah Anda yakin menghapus data ini?\');">Hapus</button></form>';
                     return $btn;
                 })
                 ->rawColumns(['aksi']);
@@ -82,7 +83,7 @@ class UserController extends Controller
     }
 
     public function count(){
-        $users = UserModel::count();
+        $users = User::count();
         return $users;
     }
 }

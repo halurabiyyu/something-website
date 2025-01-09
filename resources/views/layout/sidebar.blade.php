@@ -7,9 +7,9 @@
       </a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="#ui-basic">
+      <a class="nav-link" href="{{route('roles.index')}}">
         <i class="icon-layout menu-icon"></i>
-        <span class="menu-title">Daftar Level</span>
+        <span class="menu-title">Daftar Role</span>
         {{-- <i class="menu-arrow"></i> --}}
       </a>
       {{-- <div class="collapse" id="ui-basic">
