@@ -5,7 +5,9 @@ use App\Http\Controllers\RolesController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\ResetPasswordController;
 use App\Http\Controllers\UserController;
+
 
 Route::get('/', function(){
     return view('welcome');
@@ -34,5 +36,17 @@ Route::group(['middleware' => ['is_admin']], function () {
         
         // Route Logout
         Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
+    
     });
 })->middleware('is_admin');
+
+
+Route::get('/forgot-password', function(){
+    return view('forgot-password');
+})->name('password.request');
+
+Route::post('/forgot-password', [ResetPasswordController::class, 'passwordEmail'])->name('password.email');
+
+Route::get('/reset-password/{token}',[ResetPasswordController::class, 'passwordReset'])->name('password.reset');
+
+Route::post('/reset-password', [ResetPasswordController::class, 'passwordUpdate'])->name('password.update');

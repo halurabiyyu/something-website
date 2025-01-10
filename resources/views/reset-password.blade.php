@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <title>Login - Something App</title>
+    <title>Forgot Password - Something App</title>
     <style>
         body {
             font-family: 'Poppins';font-size: 16px;
@@ -18,36 +18,27 @@
         <div class="d-flex justify-content-center align-items-center min-vh-100">
             <div class="bg-white p-4 rounded-3 shadow d-flex flex-column justify-content-center align-items-center" style="width: min(90%, 400px);">
                 <div>
-                    <h1 class="text-center fw-bold">Some</h1>
-                    <p class="fs-6 fw-light text-center text-secondary">Hi, Welcome to our something website. Please <a href="{{route('register')}}">register</a> if you dont have account.</p>
+                    <h1 class="text-center fw-bold">Reset Password</h1>
+                    <p class="fs-6 fw-light text-center text-secondary">Please, input your email and password</p>
                 </div>
-                @if (session('error'))
-                    <div class="alert alert-danger p-2 w-100 text-center">
-                        <p class="mb-0">{{session('error')}}</p>
-                    </div>
-                @endif
-                @if (session('success'))
-                    <div class="alert alert-success p-2 w-100 text-center">
-                        <p class="mb-0">{{session('success')}}</p>
-                    </div>
-                @endif
                 @if (session('status'))
                     <div class="alert alert-success p-2 w-100 text-center">
                         <p class="mb-0">{{session('status')}}</p>
                     </div>
                 @endif
                 <div class="w-100">
-                    <form action="{{route('proses_login')}}" method="POST" class="w-100">
+                    <form action="{{route('password.update')}}" method="POST" class="w-100">
                         @csrf
+                        <input type="hidden" id="token" name="token" value="{{$token}}">
                         <label for="email" class="fs-6">Email</label>
                         <input type="email" id="email" name="email" placeholder="example@gmail.com" class="form-control mb-3" required>
                         <label for="password" class="fs-6">Password</label>
-                        <input type="password" id="password" name="password" placeholder="Aiueoabc123" class="form-control mb-3" required>
-                        <div class="d-flex justify-content-end">
-                            <a href="{{route('password.request')}}" class="fs-6 text-decoration-none">forget password?</a>
-                        </div>
+                        <input type="password" id="password" name="password" class="form-control mb-3" required>
+                        @error('email')
+                            <p class="alert alert-danger">{{$message}}</p>
+                        @enderror
                         <div class="d-flex justify-content-center mt-3">
-                            <button type="submit" class="btn btn-outline-primary px-4">Login</button>
+                            <button type="submit" class="btn btn-outline-primary px-4">Reset Password</button>
                         </div>
                     </form>
                 </div>

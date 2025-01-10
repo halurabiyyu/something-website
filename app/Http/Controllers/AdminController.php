@@ -12,7 +12,18 @@ class AdminController extends Controller
         $users = new UserController;
         $userCount = $users->count();
 
-        return view('admin.dashboard', ['userCount' => $userCount]);
+        $breadcrumb = (object)[
+            'title' => 'Dashboard',
+            'list' => ['Home', 'Dashboard']
+        ];
+
+        $page = (object)[
+            'title' => 'Dashboad Admin'
+        ];
+
+        $activeMenu = 'dashboard';
+
+        return view('admin.dashboard', ['userCount' => $userCount, 'breadcrumb' => $breadcrumb, 'page' => $page, 'activeMenu' => $activeMenu]);
     }
     
 }
